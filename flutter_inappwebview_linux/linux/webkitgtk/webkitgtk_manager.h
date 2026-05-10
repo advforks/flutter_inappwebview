@@ -34,8 +34,7 @@ class WebKitGTKManager {
   // Auto-incrementing view ID
   int64_t next_id_ = 1;
 
-  static void HandleMethodCall(FlMethodChannel* channel,
-                               FlMethodCall* method_call,
+  static void HandleMethodCall(FlMethodChannel* channel, FlMethodCall* method_call,
                                gpointer user_data);
   void HandleMethodCallImpl(FlMethodCall* method_call);
 

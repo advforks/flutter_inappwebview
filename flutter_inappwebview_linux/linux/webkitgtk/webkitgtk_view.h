@@ -22,8 +22,7 @@ struct PendingEval {
 
 class WebKitGTKView {
  public:
-  WebKitGTKView(int64_t id, FlBinaryMessenger* messenger,
-                FlTextureRegistrar* texture_registrar,
+  WebKitGTKView(int64_t id, FlBinaryMessenger* messenger, FlTextureRegistrar* texture_registrar,
                 GtkWindow* gtk_window);
   ~WebKitGTKView();
 
@@ -36,13 +35,11 @@ class WebKitGTKView {
   void SetCursorPos(double dx, double dy);
   void SetPointerButton(int kind, int button, int click_count);
   void SetScrollDelta(double dx, double dy);
-  void SendKeyEvent(int type, int key_code, int scan_code, int modifiers,
-                    const char* characters);
+  void SendKeyEvent(int type, int key_code, int scan_code, int modifiers, const char* characters);
 
   // Called by webview controller channel
   void LoadUrl(const std::string& url);
-  void LoadData(const std::string& data, const std::string& mime_type,
-                const std::string& base_url);
+  void LoadData(const std::string& data, const std::string& mime_type, const std::string& base_url);
   void EvaluateJavascript(const std::string& js, FlMethodCall* method_call);
   std::string GetUrl();
   std::string GetTitle();
@@ -76,9 +73,9 @@ class WebKitGTKView {
   int64_t texture_id_ = -1;
 
   // Method channels
-  FlMethodChannel* webview_channel_ = nullptr;       // flutter_inappwebview_$id
-  FlMethodChannel* platform_view_channel_ = nullptr; // custom_platform_view_$id
-  FlEventChannel* event_channel_ = nullptr;          // custom_platform_view_${id}_events
+  FlMethodChannel* webview_channel_ = nullptr;        // flutter_inappwebview_$id
+  FlMethodChannel* platform_view_channel_ = nullptr;  // custom_platform_view_$id
+  FlEventChannel* event_channel_ = nullptr;           // custom_platform_view_${id}_events
   bool event_listening_ = false;
 
   // Current size
@@ -101,34 +98,24 @@ class WebKitGTKView {
   guint damage_timer_id_ = 0;
 
   // ---- static GTK/WebKit signal handlers ----
-  static void OnLoadChanged(WebKitWebView* view, WebKitLoadEvent event,
-                            gpointer user_data);
-  static void OnLoadFailed(WebKitWebView* view, WebKitLoadEvent event,
-                           const gchar* failing_uri, GError* error,
-                           gpointer user_data);
-  static void OnEstimatedProgress(GObject* object, GParamSpec* pspec,
-                                  gpointer user_data);
+  static void OnLoadChanged(WebKitWebView* view, WebKitLoadEvent event, gpointer user_data);
+  static void OnLoadFailed(WebKitWebView* view, WebKitLoadEvent event, const gchar* failing_uri,
+                           GError* error, gpointer user_data);
+  static void OnEstimatedProgress(GObject* object, GParamSpec* pspec, gpointer user_data);
   static void OnScriptMessageReceived(WebKitUserContentManager* manager,
-                                      WebKitJavascriptResult* result,
-                                      gpointer user_data);
-  static void OnJavascriptFinished(GObject* source_object, GAsyncResult* res,
-                                   gpointer user_data);
-  static gboolean OnDamageEvent(GtkWidget* widget, GdkEventExpose* event,
-                                gpointer user_data);
+                                      WebKitJavascriptResult* result, gpointer user_data);
+  static void OnJavascriptFinished(GObject* source_object, GAsyncResult* res, gpointer user_data);
+  static gboolean OnDamageEvent(GtkWidget* widget, GdkEventExpose* event, gpointer user_data);
   static gboolean OnTimerTick(gpointer user_data);
-  static FlMethodErrorResponse* OnEventListen(FlEventChannel* channel,
-                                              FlValue* args,
+  static FlMethodErrorResponse* OnEventListen(FlEventChannel* channel, FlValue* args,
                                               gpointer user_data);
-  static FlMethodErrorResponse* OnEventCancel(FlEventChannel* channel,
-                                              FlValue* args,
+  static FlMethodErrorResponse* OnEventCancel(FlEventChannel* channel, FlValue* args,
                                               gpointer user_data);
 
   // ---- method channel handlers ----
-  static void HandleWebviewMethodCall(FlMethodChannel* channel,
-                                      FlMethodCall* method_call,
+  static void HandleWebviewMethodCall(FlMethodChannel* channel, FlMethodCall* method_call,
                                       gpointer user_data);
-  static void HandlePlatformViewMethodCall(FlMethodChannel* channel,
-                                           FlMethodCall* method_call,
+  static void HandlePlatformViewMethodCall(FlMethodChannel* channel, FlMethodCall* method_call,
                                            gpointer user_data);
   void HandleWebviewMethodCallImpl(FlMethodCall* method_call);
   void HandlePlatformViewMethodCallImpl(FlMethodCall* method_call);
